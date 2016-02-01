@@ -1,0 +1,42 @@
+{
+  "name": "yai",
+  "version": "0.0.1",
+  "description": "Yet another i18n",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "postinstall": "./tasks/post-install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zefirka/yai.git"
+  },
+  "keywords": [
+    "i18n",
+    "client",
+    "node",
+    "js"
+  ],
+  "author": "Trdat Mkrtchyan <wombtromb@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zefirka/yai/issues"
+  },
+  "bin": {
+    "yai": "./kit/index.js"
+  },
+  "dependencies": {
+    "commander": "=2.9.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.2.0",
+    "jscs": "2.0.0",
+    "jshint": "2.7.0",
+    "jshint-stylish": "0.4.0",
+    "lodash": "3.10.0",
+    "mkdirp": "^0.5.1",
+    "must-dist": "^0.12.0"
+  },
+  "homepage": "https://github.com/zefirka/yai#readme"
+}

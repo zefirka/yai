@@ -1,0 +1,21 @@
+{
+    "esnext": true,
+    "preset": "yandex",
+    "disallowMultipleVarDecl": null,
+    "requireSpaceAfterLineComment": null,
+    "requireSpaceBeforeBlockStatements": 1,
+   	"requireSpacesInFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
+        "beforeOpeningCurlyBrace": true
+    },
+    "requireSpacesInFunctionDeclaration": {
+        "beforeOpeningCurlyBrace": true
+    },
+    "disallowSpacesInFunctionDeclaration": {
+        "beforeOpeningRoundBrace": true
+    },
+    "excludeFiles": [
+        "node_modules/**",
+        ".git/**"
+    ]
+}

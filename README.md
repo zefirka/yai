@@ -33,6 +33,24 @@ function langSwitcher(newLang){
 `translator` function just acept language code, keyset name, key and returns value of key in given keyset of language. And `languageSwitcher` just changes some value of language code which used in translator. Pretty simple, don't it?
 
 
+## JSON
+
+By default there are JSON i18n-storage in the Yai package.
+
+### In node:
+```js
+const i18n = require('./node/lang')(addressOfStorage).i18n;
+
+i18n('keyset', 'key');
+// -> Key from addressOfStorage/keyset/en.json
+
+i18n.lang('ru');
+// Switch language
+
+i18n('keyset', 'key');
+// -> Key from addressOfStorage/keyset/ru.json
+```
+
 ## YAI ToolKit
 
 Yai toolkit provide simple API to maintain i18n storages via command line.

@@ -6,7 +6,7 @@ var program = require('commander');
 var pkg     = require('../package');
 var join    = require('path').join;
 
-const DEFAULT_LANG = 'EN';
+const DEFAULT_LANG = 'en';
 const DEFAULT_KEYSET = 'common';
 const DEFAULT_TYPE = 'JSON';
 const DEFAULT_ADDRESS = './etc/lang';
@@ -33,14 +33,13 @@ if (program.info) {
     console.log('Storage type: ' + (program.storageType || DEFAULT_TYPE));
     console.log('Adder address: ' + join(__dirname, program.useAdder));
     console.log('Remover address: ' + join(__dirname, program.useRemover));
-    console.log('--------------------------');
+    console.log('\n--------------------------');
     console.log('Lang: ' + (program.lang || DEFAULT_LANG));
     console.log('Keyset: ' + (program.keyset || DEFAULT_KEYSET));
 }
 
 let remover = require(program.useRemover);
 let adder = require(program.useAdder);
-let address = program.setup;
 let address = program.setup;
 let lang = program.lang;
 let keyset = program.keyset;

@@ -8,9 +8,9 @@ let cache = {};
 let currentLang = 'en';
 
 /**
- *
- * @param {string} newLang - новый язык
- * @return string
+ * @private
+ * @param {string} newLang - new language
+ * @return string - current language
  */
 function langSwitcher(newLang) {
     if (newLang) {
@@ -29,6 +29,13 @@ function keysets() {
     return cache;
 }
 
+/**
+ * Creates a API for YAI
+ *
+ * @public
+ * @param {string} addr - address for storage
+ * @return {object} API
+ */
 module.exports = function (addr) {
     addr = addr || join(__dirname, 'lang');
 

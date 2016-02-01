@@ -14,7 +14,6 @@ describe('on node', () => {
     });
 
     it('with russian and without keyset', function () {
-        debugger;
         i18n.lang('ru');
         i18n('test').must.to.be('Тест');
     });

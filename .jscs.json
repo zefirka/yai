@@ -16,6 +16,7 @@
     },
     "excludeFiles": [
         "node_modules/**",
-        ".git/**"
+        ".git/**",
+        "test/lang/**"
     ]
 }

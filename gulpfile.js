@@ -14,7 +14,7 @@ gulp
                 timeout: 3000
             }))
             .once('error', (err) => {
-                console.error(err);
+                console.error(new Error(err));
                 process.exit(1);
             })
             .once('end', () => {

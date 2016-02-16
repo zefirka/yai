@@ -32,5 +32,5 @@
     "after": false,
     "afterEach": false
   },
-  "predef": ["-Promise"]
+  "predef": ["Promise"]
 }

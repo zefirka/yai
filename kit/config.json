@@ -1,0 +1,10 @@
+{
+    "defaultAddress": "./etc/lang",
+    "defaultKeyset": "common",
+    "defaultLang": "en",
+    "defaultType": "json",
+    "defaultAdder": "./tools/jsonAdder.js",
+    "defaultRemover": "./tools/jsonRemover.js",
+    "keyset": "test",
+    "lang": "ru"
+}

@@ -4,13 +4,14 @@ const fs = require('fs');
 const join = require('path').join;
 const mkdirp = require('mkdirp');
 
+/**
+ * add:: String -> String -> String -> String -> String -> Undefined
+ */
 function add(addres, lang, keyset, key, value) {
     let addr = join(addres, keyset);
     let file = lang.toLowerCase() + '.json';
 
-    fs.readFile(join(addr, file), {
-        encoding: 'utf-8'
-    }, function (err, data) {
+    fs.readFile(join(addr, file), 'utf-8', (err, data) => {
         let o = {
             [key]: value
         };
@@ -21,13 +22,16 @@ function add(addres, lang, keyset, key, value) {
     });
 }
 
+/**
+ * write:: String -> String -> Object -> Undefined
+ */
 function write(addr, file, o) {
-    mkdirp(addr, function (err) {
+    return mkdirp(addr, err => {
         if (err) {
             throw new Error(err);
         }
 
-        fs.writeFile(join(addr, file), JSON.stringify(o), function (err) {
+        fs.writeFile(join(addr, file), JSON.stringify(o), err => {
             if (err) {
                 throw new Error(err);
             }

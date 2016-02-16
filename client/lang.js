@@ -3,7 +3,7 @@
 (function () {
     var i18n = require('yai');
 
-    var keysets = this.__yai;
+    var keysets = this.__yai.getKeysets();
     var lang = this.__yai__defaultLang;
 
     /**

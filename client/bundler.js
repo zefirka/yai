@@ -44,6 +44,7 @@ function promisify(dir, lang, keyset) {
                     type: 'error',
                     code: err.code,
                     keyset: keyset,
+                    lang: lang,
                     err: err
                 });
             }
@@ -51,6 +52,7 @@ function promisify(dir, lang, keyset) {
             resolve({
                 type: 'success',
                 keyset: keyset,
+                lang: lang,
                 data: data //JSON.parse(data)
             });
         });
@@ -59,19 +61,25 @@ function promisify(dir, lang, keyset) {
 
 function interpolate(globalEnvName, keysets, errorMessages) {
     return `(function (global){
-    global.${    globalEnvName} = function () {
-      return keysets;
+    global['${globalEnvName}'] = function (lang) {
+        if (Object.keys(langs[lang].errors).length) {
+            console.warn('There are some keys that was not found in i18n bundle');
+        }
+
+        return langs[lang].keysets;
     }
 
-    var keysets = {};
-    var errors = {};
+    /* Languages */
+    var langs = {};
 
     var yai = {
-      keyset: function (name, value) {
-        keysets[name] = value;
+      keyset: function (lang, name, value) {
+        langs[lang] = langs[lang] || {keysets: {}, errors: {}};
+        langs[lang].keysets[name] = value;
       },
-      error: function (name, error) {
-        errors[name] = error;
+      error: function (lang, name, error) {
+        langs[lang] = langs[lang] || {keysets: {}, errors: {}};
+        langs[lang].errors[name] = error;
       }
     };
 
@@ -91,6 +99,7 @@ function makeBundle(code, langs, dir, globalEnvName) {
     }).reduce(function (sum, cur) {
         return sum.concat(cur);
     }, [])).then(function (result) {
+
         var data = result.filter(function (response) {
             return response.type === 'success';
         });
@@ -100,11 +109,11 @@ function makeBundle(code, langs, dir, globalEnvName) {
         });
 
         var keysets = data.map(function (item) {
-            return `yai.keyset('${item.keyset}', ${item.data});`;
+            return `yai.keyset('${item.lang}', '${item.keyset}', ${item.data});`;
         }).join('\n');
 
         var errorMessages = errors.map(function (error) {
-            return `yai.error('${error.keyset}', '${error.code}');`;
+            return `yai.error('${error.lang}', '${error.keyset}', '${error.code}');`;
         }).join('\n');
 
         return interpolate(globalEnvName, keysets, errorMessages);
@@ -123,16 +132,21 @@ function create(dir, langs, globalEnvName, bundleFrom, bundleDist) {
 
         makeBundle(data, langs, dir, globalEnvName)
             .then(function (bundle) {
-                fs.writeFile(bundleDist, 'utf-8', bundle);
+                if (!bundleDist) {
+                    console.log('bundle', bundle);
+                } else {
+                    fs.writeFileSync(bundleDist, bundle, 'utf-8');
+                }
             });
 
     });
 }
 
+create.info = '(dir, langs, globalEnvName, bundleFrom, bundleDist)';
+
 function setup(ops) {
     regex = ops.regex ?
-        new RegExp(opts.regex + '\\s?\\(\\s?[\'"](.+)[\'"]\\s?,\\s?[\'"](.+)[\'"]\\s?.*\\)', 'gm')
-        : regex;
+        new RegExp(opts.regex + '\\s?\\(\\s?[\'"](.+)[\'"]\\s?,\\s?[\'"](.+)[\'"]\\s?.*\\)', 'gm') : regex;
 
     defaultDir = opts.defaultDir || defaultDir;
 }

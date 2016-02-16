@@ -2,6 +2,7 @@
 
 'use strict';
 
+var bundler = require('../client/bundler');
 var program = require('commander');
 var fs = require('fs');
 var pkg = require('../package');
@@ -27,13 +28,83 @@ program
     .option('-R, --use-remover [remover]', 'Use custom remover function', DEFAULT_REMOVER)
     .option('-i, --info', 'Show info')
     .option('-e, --storage-type', 'Storage type')
+    .option('-c, --compile', 'Build i18n bundle')
     .option('--setup-adder [adder]', 'Setup adder')
     .option('--setup-remover [remover]', 'Setup remover\n')
     .option('config', 'Shows configuration file')
-    .option('compile <bundle>', 'Compiles i18n bundle')
     .parse(process.argv);
 
-if (program.info) {
+var remover = require(program.useRemover);
+var adder = require(program.useAdder);
+var address = program.setup;
+var lang = program.lang;
+var keyset = program.keyset;
+
+run(program);
+
+function run(program) {
+    validate(program);
+
+    if (program.config) {
+        return console.log(CONFIG);
+    }
+
+    if (program.info) {
+        return info();
+    }
+
+    if (program.compile) {
+        return build(program.rawArgs.slice());
+    }
+
+    if (program.setupAdder) {
+        save('adder', program.setupAdder);
+        adder = program.setupAdder;
+    }
+
+    if (program.setupRemover) {
+        save('remover', program.setupRemover);
+        remover = program.setupRemover;
+    }
+
+    if (program.setup !== DEFAULT_ADDRESS) {
+        save('address', address);
+    }
+
+    if (program.keyset !== DEFAULT_KEYSET) {
+        save('keyset', keyset);
+    }
+
+    if (program.lang !== DEFAULT_LANG) {
+        save('lang', lang);
+    }
+
+    if (program.add && typeof program.add === 'string') {
+        let key = program.add;
+        let value = program.args.pop();
+
+        adder(address, lang, keyset, key, value);
+    }
+
+    if (program.remove && typeof program.remove === 'string') {
+        let key = program.remove;
+
+        remover(address, lang, keyset, key);
+    }
+
+}
+
+function save(prop, value) {
+    var newJson = Object.assign({}, CONFIG, {
+        [prop]: value
+    });
+    var json = beautify(JSON.stringify(newJson), {
+        indent_size: 4
+    });
+    fs.writeFileSync('./config.json', json, 'utf-8');
+}
+
+function info() {
     console.log('Yai info\n');
     console.log('------------------------------------------------------------------------------');
     console.log('Storage address:          ' + join(__dirname, program.setup));
@@ -45,55 +116,25 @@ if (program.info) {
     console.log('Keyset:                   ' + (program.keyset || DEFAULT_KEYSET));
 }
 
-var remover = require(program.useRemover);
-var adder = require(program.useAdder);
-var address = program.setup;
-var lang = program.lang;
-var keyset = program.keyset;
+function build(args) {
+    var name = '__yai__';
 
-if (program.config) {
-    console.log(CONFIG);
+    if (args.length === 6) {
+        name = args.pop();
+    }
+
+    if (args.length < 4) {
+        throw 'Specify bundle for reading';
+    }
+
+    var dist = args.length === 5 ? args.pop() : undefined;
+    var from = args.pop();
+
+    dist = dist ? dist + '.' + lang + '.js' : undefined;
+    bundler.create(address, [lang], name, from, dist);
+    return;
 }
 
-if (program.setupAdder) {
-    save('adder', program.setupAdder);
-    adder = program.setupAdder;
-}
-
-if (program.setupRemover) {
-    save('remover', program.setupRemover);
-    remover = program.setupRemover;
-}
-
-if (program.setup !== DEFAULT_ADDRESS) {
-    save('address', address);
-}
-
-if (program.keyset !== DEFAULT_KEYSET) {
-    save('keyset', keyset);
-}
-
-if (program.lang !== DEFAULT_LANG) {
-    save('lang', lang);
-}
-
-if (program.add && typeof program.add === 'string') {
-    let key = program.add;
-    let value = program.args.pop();
-
-    adder(address, lang, keyset, key, value);
-}
-
-if (program.remove && typeof program.remove === 'string') {
-    let key = program.remove;
-
-    remover(address, lang, keyset, key);
-}
-
-function save(prop, value) {
-    var newJson = Object.assign({}, CONFIG, {[prop]: value});
-    var json = beautify(JSON.stringify(newJson), {
-        indent_size: 4
-    });
-    fs.writeFileSync('./config.json', json, 'utf-8');
+function validate() {
+    return true;
 }

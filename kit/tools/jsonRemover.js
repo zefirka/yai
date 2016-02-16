@@ -4,13 +4,14 @@ const fs = require('fs');
 const join = require('path').join;
 const mkdirp = require('mkdirp');
 
+/**
+ * remove:: String -> String -> String -> String -> Undefined
+ */
 function remove(addres, lang, keyset, key) {
     let addr = join(addres, keyset);
     let file = lang.toLowerCase() + '.json';
 
-    fs.readFile(join(addr, file), {
-        encoding: 'utf-8'
-    }, function (err, data) {
+    fs.readFile(join(addr, file), 'utf-8', (err, data) => {
         let o = {};
 
         if (!err) {
@@ -22,13 +23,16 @@ function remove(addres, lang, keyset, key) {
     });
 }
 
+/**
+ * write:: String -> String -> Object -> Undefined
+ */
 function write(addr, file, o) {
-    mkdirp(addr, function (err) {
+    mkdirp(addr, err => {
         if (err) {
             throw new Error(err);
         }
 
-        fs.writeFile(join(addr, file), JSON.stringify(o), function (err) {
+        fs.writeFile(join(addr, file), JSON.stringify(o), err => {
             if (err) {
                 throw new Error(err);
             }

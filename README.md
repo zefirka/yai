@@ -54,3 +54,28 @@ i18n('keyset', 'key');
 ## YAI ToolKit
 
 Yai toolkit provide simple API to maintain i18n storages via command line.
+
+### Usage
+
+```
+Usage: yai [options]
+
+  Options:
+
+    -h, --help                   output usage information
+    -V, --version                output the version number
+    -l, --lang [lang]            Choose language
+    -k, --keyset [set]           Choose keyset
+    -a, --add <key> <value>      Add key to keyset
+    -r, --remove [key]           Remove key from
+    -s, --setup [address]        Setup address for keysets
+    -A, --use-adder [adder]      Use custom adder function
+    -R, --use-remover [remover]  Use custom remover function
+    -i, --info                   Show info
+    -e, --storage-type           Storage type
+    -c, --compile                Build i18n bundle
+    --setup-adder [adder]        Setup adder
+    --setup-remover [remover]    Setup remover
+
+    config                       Shows configuration file
+```

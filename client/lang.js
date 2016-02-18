@@ -2,9 +2,20 @@
 
 (function () {
     var i18n = require('yai');
+    var lang;
+    var keysets;
+    var yai;
 
-    var keysets = this.__yai.getKeysets();
-    var lang = this.__yai__defaultLang;
+    function init(settings) {
+        yai = settings.global[settings.nameSpace];
+        lang = yai.getDefaultLang();
+        keysets = yai(lang);
+
+        return {
+            i18n: i18n(_translator, _lang),
+            keysets: keysets
+        };
+    }
 
     /**
      * @private
@@ -14,7 +25,7 @@
      * @return string
      */
     function _translator(lang, keyset, key) {
-        return keysets[keysets][lang][key];
+        return keysets[keyset][key];
     }
 
     /**
@@ -23,15 +34,14 @@
      * @return string
      */
     function _lang(newLang) {
-        return newLang ?
-            lang = newLang :
-            lang;
+        if (newLang) {
+            keysets = yai(newLang);
+            lang = newLang;
+        }
+        return lang;
     }
 
-    module.exports = {
-        i18n: i18n(_translator, _lang),
-        keysets: keysets
-    };
+    module.exports = init;
 
 })();
 // console.log(module.exports.i18n('common', 'test'));

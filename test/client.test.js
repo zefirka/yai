@@ -1,8 +1,8 @@
 'use strict';
 
-const i18n = require('../node/lang')(__dirname + '/lang').i18n
+const i18n = require('../client/lang')(__dirname + '/lang').i18n
 
-describe('on node with json', () => {
+describe('on client with json', () => {
     
     it('with english and no keyset', function () {
          i18n('test').must.to.be('Test');

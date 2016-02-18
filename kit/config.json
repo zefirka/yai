@@ -4,8 +4,5 @@
     "defaultLang": "en",
     "defaultType": "json",
     "defaultAdder": "./tools/jsonAdder.js",
-    "defaultRemover": "./tools/jsonRemover.js",
-    "keyset": "common",
-    "lang": "en",
-    "address": "../etc/lang"
+    "defaultRemover": "./tools/jsonRemover.js"
 }

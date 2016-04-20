@@ -9,7 +9,7 @@ Function.prototype.doc = function (val) {
     } else {
         return this.__doc__;
     }
-}
+};
 
 const fs = require('fs');
 const join = require('path').join;
@@ -37,7 +37,6 @@ function getKeysets(code) {
 
     return keysets;
 }
-
 
 /**
  * @param {Array} sum
@@ -69,7 +68,7 @@ function promisify(dir, lang, keyset) {
             resolve({
                 type: err ? 'error' : 'success',
                 code: value.code,
-                [type] : value,
+                [type]: value,
                 keyset,
                 lang
             });
@@ -175,11 +174,11 @@ function create(dir, langs, globalEnvName, bundleFrom, bundleDist) {
  */
 create.doc(`
   create:: (dir, langs, globalEnvName, bundleFrom, bundleDist)
-  String: dir -> 
-  Array: langs -> 
-  String: globalEnvName -> 
-  String: bundleFrom -> 
-  String: bundleDist -> Promise'`)
+  String: dir ->
+  Array: langs ->
+  String: globalEnvName ->
+  String: bundleFrom ->
+  String: bundleDist -> Promise'`);
 
 function setup(ops) {
     regex = ops.regex ?

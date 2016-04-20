@@ -1,6 +1,6 @@
 {
   "name": "yai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Yet another i18n",
   "main": "index.js",
   "scripts": {
@@ -41,6 +41,6 @@
   },
   "homepage": "https://github.com/zefirka/yai#readme",
   "kit": {
-    "version": "0.0.2"
+    "version": "0.0.3"
   }
 }

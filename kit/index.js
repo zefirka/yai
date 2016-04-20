@@ -22,7 +22,7 @@ function lastOf(v) {
 }
 
 program
-    .version(pkg.version)
+    .version(pkg.kit.version)
     .option('-l, --lang [lang]', 'Choose language', DEFAULT_LANG)
     .option('-k, --keyset [set]', 'Choose keyset', DEFAULT_KEYSET)
     .option('-a, --add <key> <value>', 'Add key to keyset')

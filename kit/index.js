@@ -117,7 +117,7 @@ function save(prop, value) {
         indent_size: 4
     });
 
-    fs.writeFileSync('./config.json', json, 'utf-8');
+    fs.writeFileSync('./yai.config.json', json, 'utf-8');
 
     if (value) {
         console.log(`Property: ${prop} successfuly saved as: ${value}`);

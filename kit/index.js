@@ -9,7 +9,7 @@ var pkg = require('../package');
 var join = require('path').join;
 var beautify = require('js-beautify').js_beautify;
 
-var CONFIG = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+var CONFIG = JSON.parse(fs.readFileSync('./yai.config.json', 'utf-8'));
 var DEFAULT_ADDRESS = CONFIG.address || CONFIG.defaultAddress;
 var DEFAULT_KEYSET = CONFIG.keyset || CONFIG.defaultKeyset;
 var DEFAULT_LANG = CONFIG.lang || CONFIG.defaultLang;

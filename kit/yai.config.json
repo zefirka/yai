@@ -5,6 +5,4 @@
     "defaultLang": "en",
     "defaultAdder": "./tools/jsonAdder.js",
     "defaultAddress": "./etc/lang",
-    "lang": "ruxd",
-    "keyset": "jooo"
 }

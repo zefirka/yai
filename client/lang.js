@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-    var i18n = require('yai');
+    var i18n = require('../index');
     var lang;
     var keysets;
     var yai;
@@ -44,4 +44,5 @@
     module.exports = init;
 
 })();
+
 // console.log(module.exports.i18n('common', 'test'));

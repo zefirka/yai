@@ -1,8 +1,10 @@
 {
-    "defaultAddress": "./etc/lang",
+    "defaultRemover": "./tools/jsonRemover.js",
     "defaultKeyset": "common",
-    "defaultLang": "en",
     "defaultType": "json",
+    "defaultLang": "en",
     "defaultAdder": "./tools/jsonAdder.js",
-    "defaultRemover": "./tools/jsonRemover.js"
+    "defaultAddress": "./etc/lang",
+    "lang": "ruxd",
+    "keyset": "jooo"
 }

@@ -17,6 +17,10 @@ var DEFAULT_TYPE = CONFIG.type || CONFIG.defaultType;
 var DEFAULT_ADDER = CONFIG.adder || CONFIG.defaultAdder;
 var DEFAULT_REMOVER = CONFIG.remover || CONFIG.defaultRemover;
 
+function lastOf(v) {
+    return Array.isArray(v) ? v.pop() : v;
+}
+
 program
     .version(pkg.version)
     .option('-l, --lang [lang]', 'Choose language', DEFAULT_LANG)
@@ -43,10 +47,18 @@ var keyset = program.keyset;
 run(program);
 
 function run(program) {
-    validate(program);
+    if (!validate(program)) {
+        return;
+    }
 
     if (program.config) {
-        return console.log(CONFIG);
+        var last = program.rawArgs.slice().pop();
+        if (last === 'default') {
+            setConfigDefault();
+        } else {
+            console.log(CONFIG);
+        }
+        return;
     }
 
     if (program.info) {
@@ -68,15 +80,15 @@ function run(program) {
     }
 
     if (program.setup !== DEFAULT_ADDRESS) {
-        save('address', address);
+        save('address', lastOf(address));
     }
 
     if (program.keyset !== DEFAULT_KEYSET) {
-        save('keyset', keyset);
+        save('keyset', lastOf(keyset));
     }
 
     if (program.lang !== DEFAULT_LANG) {
-        save('lang', lang);
+        save('lang', lastOf(lang));
     }
 
     if (program.add && typeof program.add === 'string') {
@@ -95,13 +107,23 @@ function run(program) {
 }
 
 function save(prop, value) {
-    var newJson = Object.assign({}, CONFIG, {
-        [prop]: value
-    });
-    var json = beautify(JSON.stringify(newJson), {
+    if (value) {
+        CONFIG[prop] = value;
+    } else {
+        delete CONFIG[prop];
+    }
+
+    var json = beautify(JSON.stringify(CONFIG), {
         indent_size: 4
     });
+
     fs.writeFileSync('./config.json', json, 'utf-8');
+
+    if (value) {
+        console.log(`Property: ${prop} successfuly saved as: ${value}`);
+    } else {
+        console.log(`Property: ${prop} was deleted`);
+    }
 }
 
 function info() {
@@ -135,6 +157,16 @@ function build(args) {
     return;
 }
 
+function setConfigDefault() {
+    save('address');
+    save('keyset');
+    save('lang');
+    save('type');
+    save('adder');
+    save('remover');
+}
+
 function validate() {
     return true;
 }
+

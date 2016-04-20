@@ -15,19 +15,15 @@ function i18n(translate, language, interpolate) {
      * @return {string}
      */
     function i18nLang(lang) {
-        if (lang) {
-            return language(lang);
-        } else {
-            return language();
-        }
+        return language(lang);
     }
 
     /**
      * Translator function
      * @public
-     * @param {string} keyset
-     * @param {string|object} key
-     * @param {object} interpolant
+     * @param {string} keyset (may be key)
+     * @param {string|object} key (may be interpolant)
+     * @param {object} [interpolant]
      * @return {string}
      */
     function i18nTranslate(keyset, key, interpolant) {

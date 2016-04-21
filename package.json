@@ -1,6 +1,6 @@
 {
   "name": "yai",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Yet another i18n",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,8 @@
     "yai": "./kit/index.js"
   },
   "dependencies": {
-    "commander": "=2.9.0"
+    "commander": "=2.9.0",
+    "js-beautify": "^1.6.2"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
@@ -41,6 +42,6 @@
   },
   "homepage": "https://github.com/zefirka/yai#readme",
   "kit": {
-    "version": "0.0.4"
+    "version": "0.0.5"
   }
 }

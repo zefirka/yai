@@ -3,6 +3,7 @@
 const fs = require('fs');
 const join = require('path').join;
 const mkdirp = require('mkdirp');
+const beautify = require('js-beautify');
 
 /**
  * add:: String -> String -> String -> String -> String -> Undefined
@@ -31,7 +32,11 @@ function write(addr, file, o) {
             throw new Error(err);
         }
 
-        fs.writeFile(join(addr, file), JSON.stringify(o), err => {
+        let json = beautify(JSON.stringify(o), {
+            indent_size: 4
+        });
+
+        fs.writeFile(join(addr, file), json, err => {
             if (err) {
                 throw new Error(err);
             }

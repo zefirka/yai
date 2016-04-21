@@ -4,5 +4,6 @@
     "defaultType": "json",
     "defaultLang": "en",
     "defaultAdder": "./tools/jsonAdder.js",
-    "defaultAddress": "./etc/lang"
+    "defaultAddress": "./etc/lang",
+    "keyset": "test"
 }
